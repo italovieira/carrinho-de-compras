@@ -1,6 +1,6 @@
 # Carrinho de Compras
 
-Carrinho de compras é um sistema de e-commerce, nossa API tem como objetivo fazer realizar as operações necessárias para um site de vendas online, como por exemplo aplicar desconto, filtrar lista de produtos, etc.
+Carrinho de compras é um sistema de e-commerce, nossa API tem como objetivo realizar as operações necessárias para um site de vendas online, como por exemplo aplicar desconto, filtrar lista de produtos, etc.
 
 
 Esse app exige a versão 3 do Python.
