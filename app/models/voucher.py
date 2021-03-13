@@ -2,10 +2,9 @@ from . import Model
 
 class Voucher(Model):
 
-    def __init__(self, id, type, name, amount, available):
+    def __init__(self, id, type, code, amount, available):
         self.id = id
         self.type = type
-        self.name = name
+        self.code = code
         self.amount = amount
         self.available = available
-        
