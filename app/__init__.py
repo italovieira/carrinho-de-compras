@@ -1,7 +1,6 @@
 from flask import Flask
 from config import config
 from .db import mongo
-from .routes import configure_routes
 
 
 def create_app(config_name):
@@ -11,6 +10,7 @@ def create_app(config_name):
 
     mongo.init_app(app)
 
+    from .routes import configure_routes
     configure_routes(app)
 
     return app
