@@ -12,10 +12,13 @@ class DAO:
         return self.collection.find_one({ '_id': id })
 
     def save(self, item: dict):
-        self.collection.insert_one(item)
+        result = self.collection.insert_one(item)
+        return str(result.inserted_id)
 
     def delete(self, id):
-        self.collection.delete_one({ '_id': id })
+        result = self.collection.delete_one({ '_id': id })
+        return result.deleted_count
 
     def update(self, id, item: dict):
-        self.collection.update_one({ '_id': id }, item)
+        result = self.collection.update_one({ '_id': id }, item)
+        return result.modified_count
