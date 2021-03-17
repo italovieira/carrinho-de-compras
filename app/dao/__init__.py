@@ -1,4 +1,5 @@
 from ..db import mongo
+from .util import serialize
 
 class DAO:
 
@@ -6,10 +7,12 @@ class DAO:
         self.collection = mongo.db[collection_name]
 
     def get_all(self):
-        return self.collection.find()
+        items = self.collection.find()
+        return [serialize(x) for x in items]
 
     def get(self, id):
-        return self.collection.find_one({ '_id': id })
+        item = self.collection.find_one({ '_id': id })
+        return serialize(item)
 
     def save(self, item: dict):
         result = self.collection.insert_one(item)

@@ -20,9 +20,7 @@ class ProductRoute(Resource):
 class ProductListRoute(Resource):
 
     def get(self):
-        products = [Product(1, 'Apple', 10.3, 10),
-                    Product(2, 'Banana', 5.3, 3)]
-        return [item.to_dict() for item in products]
+        return _dao.get_all()
 
     def post(self):
         args = parser.parse_args()
