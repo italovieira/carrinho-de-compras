@@ -12,13 +12,18 @@ parser.add_argument('available', type=int, required=True)
 
 
 class ProductRoute(Resource):
+    def get(self, _id):
+        return _dao.get(_id)
 
-    def get(self, id):
-        return _dao.get(id)
+    def put(self, _id):
+        args = parser.parser_args()
+        return _dao.update(_id, args)
+
+    def delete(self, _id):
+        return _dao.delete(_id)
 
 
 class ProductListRoute(Resource):
-
     def get(self):
         return _dao.get_all()
 

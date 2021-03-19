@@ -1,6 +1,7 @@
 from flask import Flask
 from config import config
 from .db import mongo
+import logging
 
 
 def create_app(config_name):

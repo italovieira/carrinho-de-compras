@@ -4,22 +4,28 @@ from ..models.voucher import Voucher
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('id', required=True)
-parser.add_argument('type')
-parser.add_argument('code')
-parser.add_argument('amount')
-parser.add_argument('available')
+parser.add_argument('type', type=str, required=True)
+parser.add_argument('code', type=str, required=True)
+parser.add_argument('amount', type=int, required=True)
+parser.add_argument('available', type=bool, required=True)
+
 
 class VoucherRoute(Resource):
+    def get(self, _id):
+        return _dao.get(_id)
 
-    def get(self, id):
-        voucher = Voucher(1, 'shipping', '#FRETEGRATIS', 0, True)
-        return voucher.to_dict()
+    def put(self, _id):
+        args = parser.parser_args()
+        return _dao.update(_id, args)
 
-class VouchersListRoute(Resource):
+    def delete(self, _id):
+        return _dao.delete(_id)
 
+
+class VoucherListRoute(Resource):
     def get(self):
-        vouchers = [Voucher(1, 'shipping', '#FRETEGRATIS', 0, True),
-                    Voucher(2, 'percentual', '#30OFF', 30, False),
-                    Voucher(3, 'fixed', '#10REAIS', 10, True)]
-        return [item.to_dict() for item in vouchers]
+        return _dao.get_all()
+
+    def post(self):
+        args = parser.parse_args()
+        return _dao.save(args), 201

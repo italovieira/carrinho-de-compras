@@ -10,18 +10,18 @@ class DAO:
         items = self.collection.find()
         return [serialize(x) for x in items]
 
-    def get(self, id):
-        item = self.collection.find_one({ '_id': id })
+    def get(self, _id):
+        item = self.collection.find_one({ '_id': _id })
         return serialize(item)
 
     def save(self, item: dict):
         result = self.collection.insert_one(item)
         return str(result.inserted_id)
 
-    def delete(self, id):
-        result = self.collection.delete_one({ '_id': id })
+    def delete(self, _id):
+        result = self.collection.delete_one({ '_id': _id })
         return result.deleted_count
 
-    def update(self, id, item: dict):
-        result = self.collection.update_one({ '_id': id }, item)
+    def update(self, _id, item: dict):
+        result = self.collection.update_one({ '_id': _id }, item)
         return result.modified_count
