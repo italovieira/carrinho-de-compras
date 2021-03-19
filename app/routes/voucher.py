@@ -1,7 +1,5 @@
 from flask_restful import Resource, reqparse
 
-from ..models.voucher import Voucher
-
 
 parser = reqparse.RequestParser()
 parser.add_argument('type', type=str, required=True)

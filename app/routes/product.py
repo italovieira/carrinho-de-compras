@@ -1,6 +1,4 @@
 from flask_restful import Resource, reqparse
-
-from ..models.product import Product
 from ..dao.product import ProductDAO
 
 _dao = ProductDAO()

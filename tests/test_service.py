@@ -1,64 +1,50 @@
-from flask import flask, json
+from flask import Flask, json
+from os.path import dirname, isfile, join
+from dotenv import load_dotenv
+import pytest
 
-from app.api import configure_api
+# add to the path .env file
+_ENV_FILE = join(dirname(__file__), '.env')
+# if .env exists read it
+if isfile(_ENV_FILE):
+    load_dotenv(dotenv_path=_ENV_FILE)
 
-app = create_app('test')
+@pytest.fixture(autouse=True)
+def client():
+    from app import create_app
 
-product1 = {
-    "id" = 1,  
-    "name" = "Apple",
-    "price" = 10.3,
-    "available" = 10
-    }
+    app = create_app('test')
+    c = app.test_client()
+    return c
 
-product2 = {
-    "id" = 2,  
-    "name" = "Banana",
-    "price" = 5.3,
-    "available" = 3
-    }
 voucher1 = {
-    "id" = 1,  
-    "type" = "shipping",
-    "code" = "#FRETEGRATIS",
-    "amount" = 0,
-    "available" = true
+    '_id': 1,
+    'type': "shipping",
+    'code': "#FRETEGRATIS",
+    'amount': 0,
+    'available': True
+}
+
+def test_get_product(client):
+    c = client
+
+    product1 = {
+        'id': 1,
+        'name': "Apple",
+        'price': 10.3,
+        'available': 10
     }
-voucher2 = {
-    "id" = 2,  
-    "type" = "percentual",
-    "code" = "#30OFF"
-    "amount" = 30,
-    "available" = false
+
+    product2 = {
+        'id': 1,
+        'name': "Banana",
+        'price': 10.3,
+        'available': 10
     }
-voucher3 = {
-    "id" = 3,  
-    "name" = "fixed",
-    "code" = "#10REAIS"
-    "amount" = 10,
-    "available" = true
-    }        
 
-def test_product_sucess():
-    response = c.post('products/', product1)
-    json_data = json.get_json()
-    
-    assert response.status_code == 201
-    assert json_data['aceito']
+    response1 = c.post('/products', json=product1)
+    response2 = c.post('/products', json=product2)
 
-def test_get_product():
-    response = c.get('/products/1')
+    json_data = response1.get_json()
 
-    json_data = response.get_json()
-
-    assert response.status_code == 201
-
-    json_data = response.get_json()
-
-    store_dict = json_data['product']
-    assert store_dict == {
-        "id" = 1,  
-        "name" = "Apple",
-        "price" = 10.3,
-        "available" = 10
-    }
+    assert response1.status_code == 201
