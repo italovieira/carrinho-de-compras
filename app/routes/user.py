@@ -28,5 +28,5 @@ class UserListRoute(Resource):
 
     def post(self):
         args = parser.parse_args()
-        args['password'] = bcrypt.hashpw(args['password'], bcrypt.gensalt())
+        args['password'] = bcrypt.hashpw(args['password'].encode('utf-8'), bcrypt.gensalt())
         return _dao.save(args), 201
