@@ -25,6 +25,11 @@ Na raiz do projeto execute:
 
 `python run.py`
 
+### Testes
+
+Para executar os testes de integração da nossa aplicação:
+
+`docker-compose run --rm app pytest`
 
 # Estórias de Usuário
 
