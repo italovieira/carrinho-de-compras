@@ -9,17 +9,11 @@ _ENV_FILE = join(dirname(__file__), '.env')
 if isfile(_ENV_FILE):
     load_dotenv(dotenv_path=_ENV_FILE)
 
-@pytest.fixture(autouse=True)
-def client():
-    from app import create_app
+from app import create_app
+app = create_app('test')
+c = app.test_client()
 
-    app = create_app('test')
-    c = app.test_client()
-    return c
-
-def test_get_product(client):
-    c = client
-
+def test_get_product():
     product1 = {
         '_id': 1,
         'name': 'Apple',
@@ -34,9 +28,7 @@ def test_get_product(client):
         'available': 20
     }
 
-def test_get_voucher(client):
-    c = client
-
+def test_get_voucher():
     voucher1 = {
         '_id': 1,
         'type': 'shipping',
