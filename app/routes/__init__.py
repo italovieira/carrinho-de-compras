@@ -4,7 +4,9 @@ from .index import IndexRoute
 from .product import ProductRoute
 from .product import ProductListRoute
 from .voucher import VoucherRoute
-from .voucher import VoucherListRoute 
+from .voucher import VoucherListRoute
+from .user import UserRoute
+from .user import UserListRoute
 
 api = Api()
 
