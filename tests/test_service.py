@@ -28,10 +28,10 @@ def test_get_product(client):
     }
 
     product2 = {
-        '_id': 1,
+        '_id': 2,
         'name': 'Banana',
-        'price': 10.3,
-        'available': 10
+        'price': 5.3,
+        'available': 20
     }
 
 def test_get_voucher(client):
@@ -46,7 +46,7 @@ def test_get_voucher(client):
     }
 
     voucher2 = {
-        'id': 2,
+        '_id': 2,
         'type': 'percentual',
         'code': '#30OFF',
         'amount': 30,
@@ -67,3 +67,35 @@ def test_get_voucher(client):
     assert response2.status_code == 201
     assert response3.status_code == 201
     assert response4.status_code == 201
+
+    products_dict = json_data['products']
+
+    assert products_dict[0] == {
+        '_id': 1,
+        'name': 'Apple',
+        'price': 10.3,
+        'available': 10
+    }
+    assert products_dict[1] == {
+         '_id': 2,
+        'name': 'Banana',
+        'price': 5.3,
+        'available': 20
+    }
+
+    vouchers_dict = json_data['vouchers']
+
+    assert vouchers_dict[0] == {
+       '_id': 1,
+        'type': 'shipping',
+        'code': '#FRETEGRATIS',
+        'amount': 0,
+        'available': True
+    }
+    assert vouchers_dict[1] == {
+        '_id': 2,
+        'type': 'percentual',
+        'code': '#30OFF',
+        'amount': 30,
+        'available': False
+    }
