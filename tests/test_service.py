@@ -1,13 +1,5 @@
 from flask import Flask, json
-from os.path import dirname, isfile, join
-from dotenv import load_dotenv
 import pytest
-
-# add to the path .env file
-_ENV_FILE = join(dirname(__file__), '.env')
-# if .env exists read it
-if isfile(_ENV_FILE):
-    load_dotenv(dotenv_path=_ENV_FILE)
 
 from app import create_app
 app = create_app('test')
