@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_PORT: 5000
+      DEBUG: True
+      MONGO_URI: mongodb://db
+      MONGO_DATABASE: carrinho
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the docker-compose stack
+      run: docker-compose build --no-cache
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check logs
+      run: docker logs backend
+    - name: Run test suite
+      run: docker-compose run --rm app pytest
