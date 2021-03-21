@@ -1,5 +1,6 @@
 from ..db import mongo
 from .util import serialize
+from bson.objectid import ObjectId
 
 class DAO:
 
@@ -11,6 +12,7 @@ class DAO:
         return [serialize(x) for x in items]
 
     def get(self, _id):
+        _id = ObjectId(_id)
         item = self.collection.find_one({ '_id': _id })
         return serialize(item)
 

@@ -35,18 +35,18 @@ def test_get_product():
     assert response1.status_code == 201
     assert response2.status_code == 201
 
-    saved_product1 = c.get('/products/' + id_product1)
-    saved_product2 = c.get('/products/' + id_product2)
+    saved_product1 = c.get('/products/' + id_product1).get_json()
+    saved_product2 = c.get('/products/' + id_product2).get_json()
     
     #Testando o primeiro produto
-    assert saved_product1.name == 'Apple'
-    assert saved_product1.price == 10.3
-    assert saved_product1.available == 10
+    assert saved_product1['name'] == 'Apple'
+    assert saved_product1['price'] == 10.3
+    assert saved_product1['available'] == 10
 
     #Testando o segundo produto
-    assert saved_product2.name == 'Banana'
-    assert saved_product2.price == 5.3
-    assert saved_product2.available == 20
+    assert saved_product2['name'] == 'Banana'
+    assert saved_product2['price'] == 5.3
+    assert saved_product2['available'] == 20
 
 def test_get_voucher():
     voucher1 = {
@@ -72,18 +72,18 @@ def test_get_voucher():
     assert response3.status_code == 201
     assert response4.status_code == 201
 
-    saved_voucher1 = c.get('/vouchers/' + id_voucher1)
-    saved_voucher2 = c.get('/vouchers/' + id_voucher2)
+    saved_voucher1 = c.get('/vouchers/' + id_voucher1).get_json()
+    saved_voucher2 = c.get('/vouchers/' + id_voucher2).get_json()
 
     #Testando o primeiro voucher
-    assert saved_voucher1.type == 'shipping'
-    assert saved_voucher1.code == '#FRETEGRATIS'
-    assert saved_voucher1.amount == 0
-    assert saved_voucher1.available == True
+    assert saved_voucher1['type'] == 'shipping'
+    assert saved_voucher1['code'] == '#FRETEGRATIS'
+    assert saved_voucher1['amount'] == 0
+    assert saved_voucher1['available'] == True
 
     #Testando o segundo voucher
-    assert saved_voucher2.type == 'percentual'
-    assert saved_voucher2.code == '#30OFF'
-    assert saved_voucher2.amount == 30
-    assert saved_voucher2.available == False
+    assert saved_voucher2['type'] == 'percentual'
+    assert saved_voucher2['code'] == '#30OFF'
+    assert saved_voucher2['amount'] == 30
+    assert saved_voucher2['available'] == False
 
