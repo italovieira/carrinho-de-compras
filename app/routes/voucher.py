@@ -1,5 +1,7 @@
 from flask_restful import Resource, reqparse
+from ..dao.voucher import VoucherDAO
 
+_dao = VoucherDAO()
 
 parser = reqparse.RequestParser()
 parser.add_argument('type', type=str, required=True)
