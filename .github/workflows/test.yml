@@ -1,6 +1,6 @@
 name: Docker Image CI
 
-on: [push]
+on: push
 
 jobs:
   test:
@@ -9,11 +9,11 @@ jobs:
       APP_PORT: 5000
       DEBUG: True
       MONGO_URI: mongodb://db
-      MONGO_DATABASE: carrinho
+      MONGO_DATABASE: carrinho-de-compras
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Build the docker-compose stack
-      run: docker-compose build --no-cache
+      run: docker-compose build
     - name: Run test suite
-      run: docker-compose run --rm app pytest
+      run: docker-compose run app pytest
