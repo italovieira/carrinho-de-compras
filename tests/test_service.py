@@ -5,6 +5,25 @@ from app import create_app
 app = create_app('test')
 c = app.test_client()
 
+def test_get_users():
+    user = {
+        'name': 'erildo',
+        'email': 'erildo@ufrn.edu.br',
+        'password': '123456789'
+    }
+
+    response = c.post('/users', json=user)
+
+    id_user = response.get_json()
+
+    assert response.status_code == 201
+
+    saved_user = c.get('/users/' + id_user).get_json()
+
+    #Testando se o usuario foi cadastrado corretamente no banco
+    assert saved_user['name'] == 'erildo'
+    assert saved_user['email'] == 'erildo@ufrn.edu.br'
+
 def test_get_product():
     product1 = {
         'name': 'Apple',
@@ -30,12 +49,12 @@ def test_get_product():
     saved_product1 = c.get('/products/' + id_product1).get_json()
     saved_product2 = c.get('/products/' + id_product2).get_json()
     
-    #Testando o primeiro produto
+    #Testando através da rota se o primeiro produto foi cadastrado corretamente no banco
     assert saved_product1['name'] == 'Apple'
     assert saved_product1['price'] == 10.3
     assert saved_product1['available'] == 10
 
-    #Testando o segundo produto
+    #Testando através da rota se o segundo produto foi cadastrado corretamente no banco
     assert saved_product2['name'] == 'Banana'
     assert saved_product2['price'] == 5.3
     assert saved_product2['available'] == 20
@@ -67,13 +86,13 @@ def test_get_voucher():
     saved_voucher1 = c.get('/vouchers/' + id_voucher1).get_json()
     saved_voucher2 = c.get('/vouchers/' + id_voucher2).get_json()
 
-    #Testando o primeiro voucher
+     #Testando através da rota se o primeiro voucher foi cadastrado corretamente no banco
     assert saved_voucher1['type'] == 'shipping'
     assert saved_voucher1['code'] == '#FRETEGRATIS'
     assert saved_voucher1['amount'] == 0
     assert saved_voucher1['available'] == True
 
-    #Testando o segundo voucher
+     #Testando através da rota se o segundo voucher foi cadastrado corretamente no banco
     assert saved_voucher2['type'] == 'percentual'
     assert saved_voucher2['code'] == '#30OFF'
     assert saved_voucher2['amount'] == 30
