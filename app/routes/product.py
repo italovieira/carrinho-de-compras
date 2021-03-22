@@ -14,7 +14,7 @@ class ProductRoute(Resource):
         return _dao.get(_id)
 
     def put(self, _id):
-        args = parser.parser_args()
+        args = parser.parse_args()
         return _dao.update(_id, args)
 
     def delete(self, _id):

@@ -23,5 +23,5 @@ class DAO:
         return result.deleted_count
 
     def update(self, _id, item: dict):
-        result = self.collection.update_one({ '_id': ObjectId(_id) }, item)
+        result = self.collection.replace_one({ '_id': ObjectId(_id) }, item)
         return result.modified_count
