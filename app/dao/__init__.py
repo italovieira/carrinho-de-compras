@@ -12,7 +12,7 @@ class DAO:
 
     def get(self, _id):
         item = self.collection.find_one({ '_id': ObjectId(_id) })
-        return serialize(item)
+        return serialize(item) if item is not None else {}
 
     def save(self, item: dict):
         result = self.collection.insert_one(item)
