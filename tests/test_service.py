@@ -60,6 +60,17 @@ def test_get_product():
     assert saved_product2['price'] == 5.3
     assert saved_product2['available'] == 20
 
+    new_product1 = {
+        'name': 'Moranguinho',
+        'price': 0.4,
+        'available': 1
+    }
+
+    result = c.put('/products/' + id_product1, json=new_product1).get_json()
+    updated_product1 = c.get('/products/' + id_product1).get_json()
+    assert updated_product1['name'] == 'Moranguinho'
+
+
 def test_get_voucher():
     voucher1 = {
         'type': 'shipping',
