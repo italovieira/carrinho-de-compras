@@ -2,7 +2,6 @@ from flask_restful import Resource, reqparse
 import bcrypt
 from ..dao.user import UserDAO
 
-
 _dao = UserDAO()
 
 parser = reqparse.RequestParser()
