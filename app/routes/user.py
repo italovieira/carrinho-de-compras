@@ -29,3 +29,12 @@ class UserListRoute(Resource):
         args = parser.parse_args()
         args['password'] = str(bcrypt.hashpw(args['password'].encode('utf-8'), bcrypt.gensalt()))
         return _dao.save(args), 201
+
+
+class OrderRoute(Resource):
+    def get(self, user_id):
+        return _dao.get_orders(user_id)
+
+    def post(self, user_id):
+        args = parser.parse_args()
+        return _dao.save_order(user_id)
