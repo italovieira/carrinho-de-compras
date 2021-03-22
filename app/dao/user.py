@@ -17,5 +17,6 @@ class UserDAO(DAO):
         return result.modified_count
 
     def get_orders(self, user_id):
-        items = self.collection.find({ '_id': ObjectId(user_id) }, { '_id': 0, 'orders': 1 })
-        return [serialize(x) for x in items]
+        result = self.collection.find_one({ '_id': ObjectId(user_id) }, { '_id': 0, 'orders': 1 })
+        orders = result['orders'] if 'orders' in result else []
+        return [serialize(x) for x in orders]

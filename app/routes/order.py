@@ -4,7 +4,7 @@ from ..dao.user import UserDAO
 _dao = UserDAO()
 
 parser = reqparse.RequestParser()
-parser.add_argument('products', type=str, required=True)
+parser.add_argument('products', type=dict, action='append')
 parser.add_argument('voucher_id', type=str, required=True)
 parser.add_argument('date', type=str, required=True)
 
