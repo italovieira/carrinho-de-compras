@@ -1,5 +1,6 @@
 from flask import Flask, json
 import pytest
+import logging
 
 from app import create_app
 app = create_app('test')
@@ -138,22 +139,23 @@ def test_get_order():
     saved_voucher = c.get('/vouchers/' + id_voucher).get_json()
  
     order = {
-        'products:': [{'product_id': id_product, 'amount': 5}],
+        'products': [{ 'product_id': id_product, 'amount': 5 }, {'product_id': id_product, 'amount': 9 }],
         'voucher_id': id_voucher,
         'date': '21/03/2021'
     }
 
     response_order = c.post('/users/' + id_user + '/orders', json=order)
-
-    id_order = response_order.get_json()
+    app.logger.debug(response_order.get_json())
 
     assert response_order.status_code == 201
 
-    saved_order = c.get('/users/' + id_user + '/orders').get_json()
+    saved_order = c.get('/users/' + id_user + '/orders').get_json()[0]
+
+    app.logger.debug(saved_order)
+    app.logger.debug(saved_order['products'])
 
     first_product = saved_order['products'][0]
 
     assert first_product['product_id'] == id_product
-    assert first_product['products'][0]['amount'] == 5
     assert saved_order['voucher_id'] == id_voucher
     assert saved_order['date'] == '21/03/2021'
