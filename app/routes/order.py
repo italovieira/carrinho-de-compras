@@ -9,10 +9,6 @@ parser.add_argument('voucher_id', type=str, required=True)
 parser.add_argument('date', type=str, required=True)
 
 class OrderListRoute(Resource):
-    def get(self, user_id, order_id):
-        return _dao.get_orders(user_id)
-
-class OrderListRoute(Resource):
     def get(self, user_id):
         return _dao.get_orders(user_id)
 
