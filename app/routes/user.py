@@ -37,4 +37,4 @@ class OrderRoute(Resource):
 
     def post(self, user_id):
         args = parser.parse_args()
-        return _dao.save_order(user_id)
+        return _dao.save_order(user_id), 201

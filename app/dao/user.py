@@ -13,8 +13,8 @@ class UserDAO(DAO):
         return serialize(item)
 
     def save_order(self, user_id, order: dict):
-        result = self.collection.update( { '_id' : ObjectId(user_id) }, { '$push': { 'orders': order }})
-        return result.deleted_count
+        result = self.collection.update_one( { '_id' : ObjectId(user_id) }, { '$push': { 'orders': order }})
+        return result.modified_count
 
     def get_orders(self, user_id):
         items = self.collection.find({ '_id': ObjectId(user_id) }, { '_id': 0, 'orders': 1 })
