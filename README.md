@@ -13,6 +13,8 @@ Crie um arquivo `.env` com as variáveis de acordo com o seu ambiente
 $ cat .env
 APP_PORT=5000
 DEBUG=True
+MONGO_URI=mongodb://localhost:27015
+MONGO_DATABASE=carrinho-de-compras
 ```
 
 Em `requirements.txt` é detalhado as dependências e as respectivas versões que são exigidas e que podem ser instaladas usando:
