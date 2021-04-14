@@ -13,6 +13,7 @@ class UserDAO(DAO):
         return serialize(item)
 
     def save_order(self, user_id, order: dict):
+        order = { '_id': ObjectId(), **order }
         result = self.collection.update_one( { '_id' : ObjectId(user_id) }, { '$push': { 'orders': order }})
         return result.modified_count
 
@@ -20,3 +21,7 @@ class UserDAO(DAO):
         result = self.collection.find_one({ '_id': ObjectId(user_id) }, { '_id': 0, 'orders': 1 })
         orders = result['orders'] if 'orders' in result else []
         return [serialize(x) for x in orders]
+
+    def get_all(self):
+        items = self.collection.find({}, { 'orders': 0 })
+        return [serialize(x) for x in items]
