@@ -8,6 +8,7 @@ from .voucher import VoucherListRoute
 from .user import UserRoute
 from .user import UserListRoute
 from .order import OrderListRoute
+from .checkout import CheckoutRoute
 
 api = Api()
 
@@ -24,5 +25,7 @@ def configure_routes(app):
     api.add_resource(UserListRoute, '/users')
 
     api.add_resource(OrderListRoute, '/users/<user_id>/orders')
+
+    api.add_resource(CheckoutRoute, '/users/<user_id>/orders/<order_id>/checkout')
 
     api.init_app(app)
