@@ -129,17 +129,25 @@ def test_get_order():
 
     saved_user = c.get('/users/' + id_user).get_json()
 
-    product = {
+    product1 = {
         'name': 'Pineaple',
         'price': 6.3,
         'available': 20
     }
+      product2 = {
+        'name': 'Watermelon',
+        'price': 3.5,
+        'available': 20
+    }
 
-    response_product = c.post('/products', json=product)
+    response_product1 = c.post('/products', json=product1)
+    response_product2 = c.post('/products', json=product2)
 
-    id_product = response_product.get_json()
+    id_product1 = response_product1.get_json()
+    id_product2 = response_product2.get_json()
 
-    saved_product = c.get('/products/' + id_product).get_json()
+    saved_product1 = c.get('/products/' + id_product1).get_json()
+    saved_product2 = c.get('/products/' + id_product2).get_json()
 
     voucher = {
         'type': 'percentual',
@@ -155,7 +163,7 @@ def test_get_order():
     saved_voucher = c.get('/vouchers/' + id_voucher).get_json()
  
     order = {
-        'products': [{ 'product_id': id_product, 'amount': 5 }, {'product_id': id_product, 'amount': 9 }],
+        'products': [{ 'product_id': id_product1, 'amount': 5 }, {'product_id': id_product2, 'amount': 9 }],
         'voucher_id': id_voucher,
         'date': '21/03/2021'
     }
@@ -172,6 +180,6 @@ def test_get_order():
 
     first_product = saved_order['products'][0]
 
-    assert first_product['product_id'] == id_product
+    assert first_product['product_id'] == id_product1
     assert saved_order['voucher_id'] == id_voucher
     assert saved_order['date'] == '21/03/2021'
