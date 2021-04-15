@@ -71,9 +71,6 @@ def test_get_product():
     updated_product1 = c.get('/products/' + id_product1).get_json()
     assert updated_product1['name'] == 'Moranguinho'
 
-    result = c.delete('/products/' + id_product2).get_json()
-    deleted_product2 = c.get('/products/' + id_product2).get_json()
-    assert not deleted_product2
 
 
 def test_get_voucher():
