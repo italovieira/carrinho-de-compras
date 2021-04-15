@@ -131,7 +131,8 @@ def test_get_order():
         'price': 6.3,
         'available': 20
     }
-      product2 = {
+
+    product2 = {
         'name': 'Watermelon',
         'price': 3.5,
         'available': 20
