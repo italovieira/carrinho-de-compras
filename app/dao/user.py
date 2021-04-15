@@ -22,6 +22,21 @@ class UserDAO(DAO):
         orders = result['orders'] if 'orders' in result else []
         return [serialize(x) for x in orders]
 
+    def get_order(self, user_id, order_id):
+        order = list(self.collection.aggregate([
+            { '$match': { '_id' : ObjectId(user_id) }},
+            { '$project': {
+                'orders': { '$filter': {
+                    'input': '$orders',
+                    'as': 'item',
+                    'cond': {'$eq': ['$$item._id', ObjectId(order_id)]}
+                    }}
+                }
+            }
+        ]))
+
+        return serialize(order[0]['orders'][0])
+
     def get_all(self):
         items = self.collection.find({}, { 'orders': 0 })
         return [serialize(x) for x in items]
