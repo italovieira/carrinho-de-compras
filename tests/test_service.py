@@ -6,6 +6,53 @@ from app import create_app
 app = create_app('test')
 c = app.test_client()
 
+def create_user(name,email,password):
+    user = {
+        'name': name,
+        'email': email,
+        'password': password
+    }
+    response = c.post('/users', json=user)
+    id_user = response.get_json()
+
+    return id_user
+
+def create_product(name,price,available):
+    product = {
+        'name': name,
+        'price': price,
+        'available': available
+    }
+    response = c.post('/products', json=product)
+    id_product = response.get_json()
+
+    return id_product
+
+def create_voucher(type,code,amount,available):
+    voucher = {
+        'type': type,
+        'code': code,
+        'amount': amount,
+        'available': available
+    }
+   
+    response = c.post('/vouchers', json=voucher)
+    id_voucher = response.get_json()
+
+    return id_voucher
+
+def create_order(products,id_voucher,date,id_user):
+    order = {
+        'products': products,
+        'voucher_id': id_voucher,
+        'date': date
+    }
+
+    response_order = c.post('/users/' + id_user + '/orders', json=order)
+    id_order = response_order.get_json()
+   
+    return id_order
+
 def test_get_users():
     user = {
         'name': 'erildo',
@@ -167,17 +214,29 @@ def test_get_order():
     }
 
     response_order = c.post('/users/' + id_user + '/orders', json=order)
-    app.logger.debug(response_order.get_json())
 
     assert response_order.status_code == 201
 
     saved_order = c.get('/users/' + id_user + '/orders').get_json()[0]
-
-    app.logger.debug(saved_order)
-    app.logger.debug(saved_order['products'])
-
     first_product = saved_order['products'][0]
 
     assert first_product['product_id'] == id_product1
     assert saved_order['voucher_id'] == id_voucher
     assert saved_order['date'] == '21/03/2021'
+
+def test_get_checkout():
+    id_user = create_user('italo', 'italo@gmail.com', '123123')
+    id_product1 = create_product('Orange','5','10')
+    id_product2 = create_product('Grape','20','4')
+    id_voucher = create_voucher('fixed','#20GRATIS',20,True)
+    products = [{'product_id': id_product1, 'amount': 5 }, {'product_id': id_product2, 'amount': 2}]
+    date = '17/04/2021'
+    id_order = create_order(products,id_voucher,date,id_user)
+
+    checkout = c.post('/users/' + id_user + '/orders/' + id_order, json=checkout)
+    assert checkout.status_code == 201
+
+    assert checkout['subtotal'] == 65
+    assert checkout['discount'] == 20
+    assert checkout['shipping'] == 30
+    assert checkout['total'] == 75
