@@ -233,8 +233,10 @@ def test_get_checkout():
     date = '17/04/2021'
     id_order = create_order(products,id_voucher,date,id_user)
 
-    checkout = c.post('/users/' + id_user + '/orders/' + id_order, json=checkout)
-    assert checkout.status_code == 201
+    response = c.post('/users/' + id_user + '/orders/' + id_order + '/checkout')
+    checkout = response.get_json()
+
+    assert response.status_code == 201
 
     assert checkout['subtotal'] == 65
     assert checkout['discount'] == 20
