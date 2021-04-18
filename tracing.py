@@ -3,7 +3,7 @@ from jaeger_client import Config
 from config import Config as AppConfig
 
 
-def init_tracer(service):
+def init_tracer(service_name):
     logging.getLogger('').handlers = []
     logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 
@@ -18,7 +18,7 @@ def init_tracer(service):
                 'reporting_host': AppConfig.JAEGER_HOST,
             },
         },
-        service_name=service
+        service_name=service_name
     )
 
-    return config.initialize_tracer()
+    return config.new_tracer()
