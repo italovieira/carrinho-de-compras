@@ -5,6 +5,7 @@ class Config:
     DEBUG = eval(getenv('DEBUG').title())
     MONGO_URI = getenv('MONGO_URI')
     MONGO_DATABASE = getenv('MONGO_DATABASE')
+    JAEGER_HOST = getenv('JAEGER_HOST')
 
 class DevelopmentConfig(Config):
     FLASK_ENV = 'development'

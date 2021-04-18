@@ -19,3 +19,7 @@ services:
     restart: always
     ports:
       - 27017:27017
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 16686:16686
