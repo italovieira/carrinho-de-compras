@@ -13,13 +13,16 @@ parser.add_argument('available', type=int, required=True)
 tracer = init_tracer('product route')
 
 class ProductRoute(Resource):
+    @trace(tracer, 'get product')
     def get(self, _id):
         return _dao.get(_id)
 
+    @trace(tracer, 'put product')
     def put(self, _id):
         args = parser.parse_args()
         return _dao.update(_id, args)
 
+    @trace(tracer, 'delete product')
     def delete(self, _id):
         return _dao.delete(_id)
 
@@ -29,6 +32,7 @@ class ProductListRoute(Resource):
     def get(self):
         return _dao.get_all()
 
+    @trace(tracer, 'post products')
     def post(self):
         args = parser.parse_args()
         return _dao.save(args), 201
