@@ -1,5 +1,6 @@
 import logging
 from jaeger_client import Config
+from flask_tracing import FlaskTracing
 from config import Config as AppConfig
 
 
@@ -21,4 +22,4 @@ def init_tracer(service_name):
         service_name=service_name
     )
 
-    return config.new_tracer()
+    return FlaskTracing(config.new_tracer())

@@ -1,7 +1,6 @@
 from flask_restful import Resource, reqparse
 from bson.objectid import ObjectId
 from tracing import init_tracer
-from decorators import trace
 from ..dao.user import UserDAO
 from ..dao.product import ProductDAO
 from ..dao.voucher import VoucherDAO
@@ -12,10 +11,10 @@ voucher_dao = VoucherDAO()
 
 parser = reqparse.RequestParser()
 
-tracer = init_tracer('checkout route')
+tracing = init_tracer('checkout route')
 
 class CheckoutRoute(Resource):
-    @trace(tracer, 'post checkout')
+    @tracing.trace('post checkout')
     def post(self, user_id, order_id):
         order_dict = user_dao.get_order(user_id, order_id)
 
